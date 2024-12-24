@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPA Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="calculator">
+        <h2>GPA Calculator</h2>
+
+        <div class="form-section">
+            <h3>Quizzes</h3>
+            <div id="quiz-fields">
+                <div class="input-group">
+                    <input type="number" class="quiz_total" placeholder="Total Marks" />
+                    <input type="number" class="quiz_obtained" placeholder="Obtained Marks" />
+                </div>
+            </div>
+            <button onclick="addQuizField()">Add Another Quiz</button>
+        </div>
+
+        <div class="form-section">
+            <h3>Assignments</h3>
+            <div id="assignment-fields">
+                <div class="input-group">
+                    <input type="number" class="assignment_total" placeholder="Total Marks" />
+                    <input type="number" class="assignment_obtained" placeholder="Obtained Marks" />
+                </div>
+            </div>
+            <button onclick="addAssignmentField()">Add Another Assignment</button>
+        </div>
+
+        <div class="form-section">
+            <h3>Midterm</h3>
+            <div class="input-group">
+                <input type="number" id="midterm_total" placeholder="Total Marks" />
+                <input type="number" id="midterm_obtained" placeholder="Obtained Marks" />
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h3>Final Exam</h3>
+            <div class="input-group">
+                <input type="number" id="final_total" placeholder="Total Marks" />
+                <input type="number" id="final_obtained" placeholder="Obtained Marks" />
+            </div>
+        </div>
+
+        <button onclick="calculateGPA()">Calculate GPA</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
