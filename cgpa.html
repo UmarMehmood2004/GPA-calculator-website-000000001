@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(90deg, lightblue, lightgrey);
+        }
+        .calculator {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        .calculator h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .form-section h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .input-group input {
+            width: 30%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .input-group input.subject {
+            width: 35%;
+        }
+        .calculator button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .calculator button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .navigation {
+            position:fixed;
+            top: 77px;
+            left: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9);
+            background: linear-gradient(90deg, lightblue, lightgrey);
+        }
+        .navigation :hover {
+            color: #000000;
+        }
+        .navigation a {
+            display: block;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 16px;
+        }
+        .navigation a:hover {
+            text-decoration: solid;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+             <div class="navigation">
+                <a href="index.html">Home</a>
+                <a href="app gpa.html">gpa calculator</a>
+                <a href="multicgpa.html">Multi-Semester CGPA</a>
+                <a href="advice.html">Advice</a>
+                <a href="grading scheme and weightage.html">grading scheme</a>
+                <a href="contact.html">Contact us</a>
+    
+            </div>
+
+    <div class="calculator">
+        <h2>CGPA Calculator</h2>
+
+        <div class="form-section">
+            <h3>Semesters</h3>
+            <div id="semester-fields">
+                <div class="input-group">
+                    <input type="text" class="subject" placeholder="Subject" />
+                    <input type="number" class="semester_gpa" placeholder="GPA" step="0.01" />
+                    <input type="number" class="semester_credit" placeholder="Credits" />
+                </div>
+            </div>
+            <button onclick="addSemesterField()">Add Another subject</button>
+        </div>
+
+        <button onclick="calculateCGPA()">Calculate CGPA</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function addSemesterField() {
+            const container = document.getElementById('semester-fields');
+            const inputGroup = document.createElement('div');
+            inputGroup.className = 'input-group';
+            inputGroup.innerHTML = `
+                <input type="text" class="subject" placeholder="Subject" />
+                <input type="number" class="semester_gpa" placeholder="GPA" step="0.01" />
+                <input type="number" class="semester_credit" placeholder="Credits" />
+            `;
+            container.appendChild(inputGroup);
+        }
+
+        function calculateCGPA() {
+            const gpaInputs = document.querySelectorAll('.semester_gpa');
+            const creditInputs = document.querySelectorAll('.semester_credit');
+
+            let totalPoints = 0;
+            let totalCredits = 0;
+
+            gpaInputs.forEach((gpaInput, index) => {
+                const gpa = parseFloat(gpaInput.value);
+                const credits = parseFloat(creditInputs[index].value);
+
+                if (!isNaN(gpa) && !isNaN(credits)) {
+                    totalPoints += gpa * credits;
+                    totalCredits += credits;
+                }
+            });
+
+            const cgpa = totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : 'N/A';
+            document.getElementById('result').textContent = `Your CGPA is: ${cgpa}`;
+        }
+    </script>
+</body>
+</html>

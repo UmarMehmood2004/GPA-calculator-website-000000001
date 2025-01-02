@@ -4,9 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GPA Calculator</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(90deg, lightblue, lightgrey);
+        }
+        .calculator {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        .calculator h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+        .form-section h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .input-group input {
+            width: 48%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .calculator button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .calculator button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .navigation {
+            position:fixed;
+            top: 77px;
+            left: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9);
+            background: linear-gradient(90deg, lightblue, lightgrey);
+        }
+        .navigation :hover {
+            color: #000000;
+        }
+        .navigation a {
+            display: block;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 16px;
+        }
+        .navigation a:hover {
+            text-decoration: solid;
+            color: black;
+        }
+    </style>
 </head>
 <body>
+    <div class="navigation-container">
+        <div class="navigation">
+            <a href="index.html">Home</a>
+            <a href="cgpa.html">Single-semester CGPA</a>
+            <a href="multicgpa.html">Multi-Semester CGPA</a>
+            <a href="advice.html">Advice</a>
+            <a href="grading scheme and weightage.html">grading scheme</a>
+            <a href="contact.html">Contact us</a>
+
+        </div>
+    </div>    
     <div class="calculator">
         <h2>GPA Calculator</h2>
 
@@ -53,6 +150,99 @@
         <div class="result" id="result"></div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+       function addAssignmentField() {
+    const fields = document.getElementById('assignment-fields');
+    const inputGroup = document.createElement('div');
+    inputGroup.className = 'input-group';
+
+    const totalInput = document.createElement('input');
+    const obtainedInput = document.createElement('input');
+
+    totalInput.type = "number";
+    totalInput.className = "assignment_total";
+    totalInput.placeholder = "Total Marks";
+
+    obtainedInput.type = "number";
+    obtainedInput.className = "assignment_obtained";
+    obtainedInput.placeholder = "Obtained Marks";
+
+    inputGroup.appendChild(totalInput);
+    inputGroup.appendChild(obtainedInput);
+
+    fields.appendChild(inputGroup);
+}
+
+function addQuizField() {
+    const fields = document.getElementById('quiz-fields');
+    const inputGroup = document.createElement('div');
+    inputGroup.className = 'input-group';
+
+    const totalInput = document.createElement('input');
+    const obtainedInput = document.createElement('input');
+
+    totalInput.type = "number";
+    totalInput.className = "quiz_total";
+    totalInput.placeholder = "Total Marks";
+
+    obtainedInput.type = "number";
+    obtainedInput.className = "quiz_obtained";
+    obtainedInput.placeholder = "Obtained Marks";
+
+    inputGroup.appendChild(totalInput);
+    inputGroup.appendChild(obtainedInput);
+
+    fields.appendChild(inputGroup);
+}
+
+function calculateGPA() {
+    const quizTotals = document.getElementsByClassName('quiz_total');
+    const quizObtained = document.getElementsByClassName('quiz_obtained');
+    let quizTotalMarks = 0;
+    let quizObtainedMarks = 0;
+    for (let i = 0; i < quizTotals.length; i++) {
+        quizTotalMarks += parseFloat(quizTotals[i].value) || 0;
+        quizObtainedMarks += parseFloat(quizObtained[i].value) || 0;
+    }
+    const quizPercentage = quizObtainedMarks / quizTotalMarks || 0;
+
+    const assignmentTotals = document.getElementsByClassName('assignment_total');
+    const assignmentObtained = document.getElementsByClassName('assignment_obtained');
+    let assignmentTotalMarks = 0;
+    let assignmentObtainedMarks = 0;
+    for (let i = 0; i < assignmentTotals.length; i++) {
+        assignmentTotalMarks += parseFloat(assignmentTotals[i].value) || 0;
+        assignmentObtainedMarks += parseFloat(assignmentObtained[i].value) || 0;
+    }
+    const assignmentPercentage = assignmentObtainedMarks / assignmentTotalMarks || 0;
+
+    const midtermTotal = parseFloat(document.getElementById('midterm_total').value) || 0;
+    const midtermObtained = parseFloat(document.getElementById('midterm_obtained').value) || 0;
+    const midtermPercentage = midtermObtained / midtermTotal || 0;
+
+    const finalTotal = parseFloat(document.getElementById('final_total').value) || 0;
+    const finalObtained = parseFloat(document.getElementById('final_obtained').value) || 0;
+    const finalPercentage = finalObtained / finalTotal || 0;
+
+    const totalScore = (quizPercentage * 10) + (assignmentPercentage * 15) + (midtermPercentage * 25) + (finalPercentage * 50);
+
+    let gpa;
+    if (totalScore >= 85) gpa = 4.00;
+    else if (totalScore >= 80) gpa = 3.66;
+    else if (totalScore >= 75) gpa = 3.33;
+    else if (totalScore >= 71) gpa = 3.00;
+    else if (totalScore >= 68) gpa = 2.66;
+    else if (totalScore >= 64) gpa = 2.33;
+    else if (totalScore >= 61) gpa = 2.00;
+    else if (totalScore >= 58) gpa = 1.66;
+    else if (totalScore >= 54) gpa = 1.30;
+    else if (totalScore >= 50) gpa = 1.00;
+    else gpa = 0.00;
+
+    document.getElementById('result').textContent = `Your GPA is: ${gpa.toFixed(2)}`;
+    document.getElementById('result').style.color = "green";
+}
+ 
+    </script>
 </body>
 </html>
